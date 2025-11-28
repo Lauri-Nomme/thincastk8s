@@ -1,0 +1,4 @@
+n build --progress=plain  -t locals.tf/thincast-ltf . 2>&1
+n run --rm -it --net none locals.tf/thincast-ltf:latest
+n images locals.tf/thincast-ltf
+
