@@ -1,4 +1,20 @@
 n build --progress=plain  -t locals.tf/thincast-ltf . 2>&1
-n run --rm -it --net none locals.tf/thincast-ltf:latest
 n images locals.tf/thincast-ltf
+
+n run --rm -it -v config/config:/var/lib/rdwebservices/config -e OUTBOUND_WHITELIST=10.222.1.30 --cap-add=NET_ADMIN  -p 10.222.1.22:443:443 -p 10.222.1.22:80:80 -v /etc/letsencrypt/live/*.io/cert.pem:/etc/ssl/rd.pem -v /etc/letsencrypt/live/*.io/privkey.pem:/etc/ssl/rd.key  locals.tf/thincast-ltf:latest 
+
+:)
+Your Thincast RD WebClient
+
+configs /var/lib/rdwebservices/config/
+
+2025.11.28 23:18:57.368 appcontext      DEBUG - Executable directory: /usr/sbin/RDWebServices/
+2025.11.28 23:18:57.368 appcontext      DEBUG - Config directory:     /var/lib/rdwebservices/config/
+2025.11.28 23:18:57.368 appcontext      DEBUG - Sysconfig directory:  /etc/rdwebservices/
+2025.11.28 23:18:57.368 appcontext      DEBUG - Data directory:       /var/lib/rdwebservices/data/
+2025.11.28 23:18:57.368 appcontext      DEBUG - License directory:    /var/lib/rdwebservices/config/
+2025.11.28 23:18:57.368 appcontext      DEBUG - Log directory:        /var/log/rdwebservices/
+2025.11.28 23:18:57.368 appcontext      DEBUG - Backup directory:     /var/lib/rdwebservices/data/backup/
+
+2025.11.28 23:18:57.376 WSUserManager   INFO  - Created root password overwrite file '/etc/rdwebservices/RDWSUsers.administrator.overwrite.cfg'.
 

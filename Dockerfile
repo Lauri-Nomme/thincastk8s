@@ -1,5 +1,8 @@
 FROM debian:trixie-slim
 
+ENV OUTBOUND_CONFINE="1"
+ENV OUTBOUND_WHITELIST="1.1.1.1 2.2.2.2"
+
 WORKDIR /
 
 RUN apt update && \
@@ -20,11 +23,14 @@ RUN apt update && \
 		libthrift-0.19.0t64 \
 		libzip5 \
 		zlib1g \
+		iptables \
 		&& \
 	apt clean && \
 	rm -rf /var/lib/apt/lists/*
 
 COPY stage0/fs/ /
+COPY confine.sh /
+RUN chmod +x /confine.sh
 
-ENTRYPOINT ["usr/sbin/RDWebServices"]
-CMD ["-l", "info", "-a", "none", "-p", "443", "-k", "/etc/ssl/rd.key", "-c", "/etc/ssl/rd.cert"]
+ENTRYPOINT ["/confine.sh", "/usr/sbin/RDWebServices"]
+CMD ["-l", "debug", "-a", "none", "-p", "443", "-k", "/etc/ssl/rd.key", "-c", "/etc/ssl/rd.pem"]
