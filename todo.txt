@@ -1,7 +1,7 @@
-n build --progress=plain  -t locals.tf/thincast-ltf . 2>&1
-n images locals.tf/thincast-ltf
+n build --progress=plain  -t registry.amzk8s.io/thincast-ltf . 2>&1
+n images registry.amzk8s.io/thincast-ltf
 
-n run --rm -it -v config/config:/var/lib/rdwebservices/config -e OUTBOUND_WHITELIST=10.222.1.30 --cap-add=NET_ADMIN  -p 10.222.1.22:443:443 -p 10.222.1.22:80:80 -v /etc/letsencrypt/live/*.io/cert.pem:/etc/ssl/rd.pem -v /etc/letsencrypt/live/*.io/privkey.pem:/etc/ssl/rd.key  locals.tf/thincast-ltf:latest 
+sudo nerdctl run -d --name thincast --privileged -e OUTBOUND_CONFINE=1 -e OUTBOUND_WHITELIST=10.222.1.42\ 10.222.1.22 --network=bridge -v /home/*/dev/thincast/stage0/fs/sys/devices/virtual/dmi/id/product_uuid:/sys/devices/virtual/dmi/id/product_uuid -v /home/*/dev/thincast/config/config:/var/lib/rdwebservices/config -v /etc/letsencrypt/live/*.io/cert.pem:/etc/ssl/rd.pem -v /etc/letsencrypt/live/*.io/privkey.pem:/etc/ssl/rd.key -p 10.222.1.22:443:443/tcp -p 10.222.1.22:80:80/tcp registry.amzk8s.io/thincast-ltf:1.0.1
 
 :)
 Your Thincast RD WebClient

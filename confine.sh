@@ -14,4 +14,4 @@ fi
 b="$1"
 shift
 echo "[+] $b" "$@"
-exec "$b" "$@"
+LD_PRELOAD=/enhance.so exec "$b" "$@"
